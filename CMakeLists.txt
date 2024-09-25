@@ -9,7 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Compile options
 option(BUILD_TESTS "Build th tests" OFF)
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 if(BUILD_TESTS)
     enable_testing()
@@ -22,12 +22,25 @@ find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 
-add_library(core STATIC src/window.cpp)
+# Define paths for each component
+set(CORE_SOURCES
+    src/core/window.cpp
+)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+set(RENDERER_SOURCES
+    src/renderer/renderer.cpp
+)
+
+add_library(core STATIC ${CORE_SOURCES})
+add_library(renderer STATIC ${RENDERER_SOURCES})
+
+add_executable(${PROJECT_NAME}
+    src/main.cpp
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     core
+    renderer
     OpenGL::GL
     GLEW::GLEW
     glfw

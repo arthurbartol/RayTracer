@@ -1,15 +1,20 @@
 // src/main.cpp
 
-#include "window.h"
+#include "renderer/renderer.h"
+#include "core/window.h"
 
 #include <iostream>
 
 int main() {
     try {
         Window window(800, 600, "raytracer");
+        Renderer renderer;
+
+        renderer.initialize();
+        renderer.setViewportSize(window.width, window.height);
 
         while (!window.shouldClose()) {
-            // Future rendering code
+            renderer.render();
 
             window.swapBuffers();
             window.pollEvents();

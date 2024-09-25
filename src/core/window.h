@@ -1,4 +1,4 @@
-// include/window.h
+// core/window.h
 
 #pragma once
 
